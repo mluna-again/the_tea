@@ -26,7 +26,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case MenuItemPressedMsg:
 		m.buttonPressed = msg.Item.Title
-		if m.buttonPressed == exitBtnID {
+		if msg.ID == exitBtnID {
 			return m, tea.Quit
 		}
 
