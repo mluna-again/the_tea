@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"thetea/menu"
+	"the_tea/menu"
 )
 
 var item string

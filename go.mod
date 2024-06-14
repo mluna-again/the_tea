@@ -1,4 +1,4 @@
-module thetea
+module the_tea
 
 go 1.21.6
 
