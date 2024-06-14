@@ -78,7 +78,7 @@ func (m Menu) View() string {
 	for index, i := range m.Items {
 		var item string
 		if m.hoverIndex == index {
-			item = MenuItemInactiveStyle.Width(longestWidth).Render(i.Title)
+			item = MenuItemActiveStyle.Width(longestWidth).Render(i.Title)
 		} else {
 			item = MenuItemStyle.Width(longestWidth).Render(i.Title)
 		}

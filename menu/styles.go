@@ -1,19 +1,22 @@
 package menu
 
-import "github.com/charmbracelet/lipgloss"
+import (
+	"the_tea/internal"
 
-var black = lipgloss.Color("#181816")
-var white = lipgloss.Color("#c5c9c5")
-var gray = lipgloss.Color("#a6a69c")
+	"github.com/charmbracelet/lipgloss"
+)
 
 var MenuStyle = lipgloss.NewStyle().
-	Border(lipgloss.ThickBorder()).
-	BorderForeground(white)
+	Border(lipgloss.NormalBorder()).
+	BorderLeft(false).
+	BorderTop(false).
+	BorderForeground(internal.Black).
+	BorderBackground(internal.Black)
 
 var MenuItemStyle = lipgloss.NewStyle().
-	Background(black).
-	Foreground(white)
+	Background(internal.Blue).
+	Foreground(internal.White)
 
-var MenuItemInactiveStyle = lipgloss.NewStyle().
-	Background(gray).
-	Foreground(white)
+var MenuItemActiveStyle = lipgloss.NewStyle().
+	Background(internal.White).
+	Foreground(internal.Black)
