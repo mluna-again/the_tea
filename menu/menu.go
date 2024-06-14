@@ -11,7 +11,8 @@ import (
 )
 
 type MenuItemPressedMsg struct {
-	ID string
+	ID   string
+	Item MenuItem
 }
 
 type MenuItem struct {
@@ -80,7 +81,10 @@ func (m Menu) Update(msg tea.Msg) (Menu, tea.Cmd) {
 			if clicked && i.Submenu == nil {
 				m.disableOtherMenus("")
 				return m, func() tea.Msg {
-					return MenuItemPressedMsg{ID: i.ID}
+					return MenuItemPressedMsg{
+						ID:   i.ID,
+						Item: i,
+					}
 				}
 			}
 

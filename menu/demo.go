@@ -25,10 +25,11 @@ func (m model) Init() tea.Cmd {
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case MenuItemPressedMsg:
-		m.buttonPressed = msg.ID
+		m.buttonPressed = msg.Item.Title
 		if m.buttonPressed == exitBtnID {
 			return m, tea.Quit
 		}
+
 		return m, nil
 
 	case tea.KeyMsg:
@@ -47,18 +48,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	menu := m.menu.View()
 
-	button := ""
-	for _, b := range m.buttons {
-		if b.ID == m.buttonPressed {
-			button = b.Title
-		}
-	}
-
-	if button == "" {
+	if m.buttonPressed == "" {
 		return m.z.Scan(menu)
 	}
 
-	content := lipgloss.JoinVertical(lipgloss.Top, menu, fmt.Sprintf("You pressed the %s button", button))
+	content := lipgloss.JoinVertical(lipgloss.Top, menu, fmt.Sprintf("You pressed the %s button", m.buttonPressed))
 	return m.z.Scan(content)
 }
 
