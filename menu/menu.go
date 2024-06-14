@@ -6,6 +6,7 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/google/uuid"
 	zone "github.com/lrstanley/bubblezone"
 )
 
@@ -25,6 +26,7 @@ type Menu struct {
 	Root       bool
 	zManager   *zone.Manager
 	hoverIndex int
+	id         string
 }
 
 func NewMenu(items []MenuItem, root bool, zone *zone.Manager) *Menu {
@@ -40,6 +42,7 @@ func NewMenu(items []MenuItem, root bool, zone *zone.Manager) *Menu {
 		hoverIndex: 0,
 		Active:     root,
 		Root:       root,
+		id:         uuid.NewString(),
 	}
 }
 
@@ -50,6 +53,10 @@ func (m Menu) Init() tea.Cmd {
 func (m Menu) Update(msg tea.Msg) (Menu, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.MouseMsg:
+		if !m.zManager.Get(m.id).InBounds(msg) {
+			break
+		}
+
 		if msg.Action == tea.MouseActionMotion {
 			for index, i := range m.Items {
 				if m.zManager.Get(i.ID).InBounds(msg) {
@@ -133,7 +140,7 @@ func (m Menu) View() string {
 
 	content := lipgloss.JoinHorizontal(lipgloss.Center, allMenus...)
 
-	return content
+	return m.zManager.Mark(m.id, content)
 }
 
 func (m *Menu) disable() {

@@ -18,6 +18,8 @@ github.com/charmbracelet/x/windows v0.1.2 h1:Iumiwq2G+BRmgoayww/qfcvof7W/3uLoelh
 github.com/charmbracelet/x/windows v0.1.2/go.mod h1:GLEO/l+lizvFDBPLIOk+49gdX49L9YWMB5t+DZd0jkQ=
 github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f h1:Y/CXytFA4m6baUTXGLOoWe4PQhGxaX0KpnayAqC48p4=
 github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f/go.mod h1:vw97MGsxSvLiUE2X8qFplwetxpGLQrlU1Q9AUEIzCaM=
+github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
+github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/lrstanley/bubblezone v0.0.0-20240609171605-b723e5c0b1af h1:ElLxMeBKoghsTLsrDyZGLcEz6WcPZcBzYvAK9CIHDyA=
 github.com/lrstanley/bubblezone v0.0.0-20240609171605-b723e5c0b1af/go.mod h1:k7GwzSav+E8Isx3+2d5z5EJhIQrbC7mIOAFvV0TylSI=
 github.com/lucasb-eyer/go-colorful v1.2.0 h1:1nnpGOrhyZZuNyfu1QjKiUICQ74+3FNCN69Aj6K7nkY=
