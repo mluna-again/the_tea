@@ -77,39 +77,30 @@ func Demo() {
 	items := []MenuItem{
 		{
 			Title: "Do Nothing Button",
-			ID:    "1",
 		},
 		{
 			Title: "About this program",
-			ID:    "2",
 			Submenu: NewMenu([]MenuItem{
 				{
 					Title: "It",
-					ID:    "a",
 				},
 				{
 					Title: "Supports",
-					ID:    "b",
 				},
 				{
 					Title: "Nested",
-					ID:    "c",
 				},
 				{
 					Title: "Menus",
-					ID:    "d",
 					Submenu: NewMenu([]MenuItem{
 						{
 							Title: ":D",
-							ID:    ":D",
 						},
 						{
 							Title: "D:",
-							ID:    "D:",
 						},
 						{
 							Title: ";)",
-							ID:    ";)",
 						},
 					}, false, z),
 				},
@@ -117,27 +108,21 @@ func Demo() {
 		},
 		{
 			Title: "Help",
-			ID:    "3",
 		},
 		{
 			Title: "Preferences",
-			ID:    "4",
 		},
 		{
 			Title: "Another nested menu",
-			ID:    "5",
 			Submenu: NewMenu([]MenuItem{
 				{
 					Title: "Hello",
-					ID:    "x",
 				},
 				{
 					Title: "new",
-					ID:    "y",
 				},
 				{
 					Title: "world",
-					ID:    "z",
 				},
 			}, false, z),
 		},

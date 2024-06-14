@@ -34,6 +34,10 @@ func NewMenu(items []MenuItem, root bool, zone *zone.Manager) *Menu {
 		if items[i].Submenu != nil {
 			items[i].Title = fmt.Sprintf("%s >", items[i].Title)
 		}
+
+		if items[i].ID == "" {
+			items[i].ID = uuid.NewString()
+		}
 	}
 
 	return &Menu{
