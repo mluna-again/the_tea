@@ -14,21 +14,32 @@ type MenuItemPressedMsg struct {
 }
 
 type MenuItem struct {
-	Title string
-	ID    string
+	Title   string
+	ID      string
+	Submenu *Menu
 }
 
 type Menu struct {
 	Items      []MenuItem
+	Active     bool
+	Root       bool
 	zManager   *zone.Manager
 	hoverIndex int
 }
 
-func NewMenu(items []MenuItem) Menu {
-	return Menu{
+func NewMenu(items []MenuItem, root bool, zone *zone.Manager) *Menu {
+	for i := range items {
+		if items[i].Submenu != nil {
+			items[i].Title = fmt.Sprintf("%s >", items[i].Title)
+		}
+	}
+
+	return &Menu{
 		Items:      items,
-		zManager:   zone.New(),
+		zManager:   zone,
 		hoverIndex: 0,
+		Active:     root,
+		Root:       root,
 	}
 }
 
@@ -40,29 +51,53 @@ func (m Menu) Update(msg tea.Msg) (Menu, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.MouseMsg:
 		if msg.Action == tea.MouseActionMotion {
-			for index := range m.Items {
-				if m.zManager.Get(fmt.Sprint(index)).InBounds(msg) {
+			for index, i := range m.Items {
+				if m.zManager.Get(i.ID).InBounds(msg) {
 					m.hoverIndex = index
-					return m, nil
+					break
 				}
 			}
 			break
 		}
 
-		if msg.Action != tea.MouseActionRelease || msg.Button != tea.MouseButtonLeft {
-			return m, nil
+		if msg.Action != tea.MouseActionRelease || msg.Button != tea.MouseButtonLeft || !m.Active {
+			break
 		}
 
-		for index, i := range m.Items {
-			if m.zManager.Get(fmt.Sprint(index)).InBounds(msg) {
+		for _, i := range m.Items {
+			clicked := m.zManager.Get(i.ID).InBounds(msg)
+			if clicked && i.Submenu == nil {
+				m.disableOtherMenus("")
 				return m, func() tea.Msg {
 					return MenuItemPressedMsg{ID: i.ID}
 				}
 			}
+
+			if clicked && i.Submenu != nil {
+				i.Submenu.Active = true
+				m.disableOtherMenus(i.ID)
+				break
+			}
+
+			if clicked {
+				// disable all menus
+				m.disableOtherMenus("")
+			}
 		}
 	}
 
-	return m, nil
+	var cmd tea.Cmd
+	var cmds []tea.Cmd
+	for i, item := range m.Items {
+		if item.Submenu != nil && item.Submenu.Active {
+			var newMenu Menu
+			newMenu, cmd = m.Items[i].Submenu.Update(msg)
+			m.Items[i].Submenu = &newMenu
+			cmds = append(cmds, cmd)
+		}
+	}
+
+	return m, tea.Batch(cmds...)
 }
 
 func (m Menu) View() string {
@@ -74,7 +109,9 @@ func (m Menu) View() string {
 		}
 	}
 
+	submenus := []string{}
 	items := []string{}
+
 	for index, i := range m.Items {
 		var item string
 		if m.hoverIndex == index {
@@ -82,9 +119,32 @@ func (m Menu) View() string {
 		} else {
 			item = MenuItemStyle.Width(longestWidth).Render(i.Title)
 		}
-		items = append(items, m.zManager.Mark(fmt.Sprint(index), item))
+		items = append(items, m.zManager.Mark(fmt.Sprint(i.ID), item))
+
+		if i.Submenu != nil && i.Submenu.Active {
+			submenus = append(submenus, i.Submenu.View())
+		}
 	}
 
 	menu := lipgloss.JoinVertical(lipgloss.Top, items...)
-	return m.zManager.Scan(MenuStyle.Render(menu))
+	menu = MenuStyle.Render(menu)
+	allMenus := []string{menu}
+	allMenus = append(allMenus, submenus...)
+
+	content := lipgloss.JoinHorizontal(lipgloss.Center, allMenus...)
+
+	return content
+}
+
+func (m *Menu) disable() {
+	m.Active = false
+}
+
+func (m *Menu) disableOtherMenus(id string) {
+	for _, item := range m.Items {
+		if item.Submenu != nil && (item.ID != id || id == "") {
+			item.Submenu.disable()
+			item.Submenu.disableOtherMenus(id)
+		}
+	}
 }
