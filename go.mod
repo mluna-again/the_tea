@@ -1,4 +1,4 @@
-module te
+module thetea
 
 go 1.21.6
 
