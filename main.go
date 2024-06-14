@@ -12,7 +12,7 @@ var item string
 var helpMsg = `
 Usage:
 
-thetea menu
+thetea -item menu
 `
 
 func usage() {
