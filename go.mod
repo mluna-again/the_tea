@@ -1,4 +1,4 @@
-module the_tea
+module github.com/mluna-again/the_tea
 
 go 1.21.6
 
