@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"the_tea/menu"
+	"github.com/mluna-again/the_tea/menu"
 )
 
 var item string

@@ -1,7 +1,7 @@
 package menu
 
 import (
-	"the_tea/internal"
+	"github.com/mluna-again/the_tea/internal"
 
 	"github.com/charmbracelet/lipgloss"
 )
