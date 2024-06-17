@@ -5,6 +5,8 @@ go 1.21.6
 require (
 	github.com/charmbracelet/bubbletea v0.26.4
 	github.com/charmbracelet/lipgloss v0.11.0
+	github.com/google/uuid v1.6.0
+	github.com/lrstanley/bubblezone v0.0.0-20240616011544-69b11dddf9ae
 )
 
 require (
@@ -14,8 +16,6 @@ require (
 	github.com/charmbracelet/x/term v0.1.1 // indirect
 	github.com/charmbracelet/x/windows v0.1.2 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
-	github.com/google/uuid v1.6.0 // indirect
-	github.com/lrstanley/bubblezone v0.0.0-20240609171605-b723e5c0b1af // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
